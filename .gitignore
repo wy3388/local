@@ -1,1 +1,2 @@
-data/mysql57
+data/mysql57/**
+!data/mysql57/.gitkeep
