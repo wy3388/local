@@ -10,7 +10,6 @@ services:
       - custom_network
     restart: always
     environment:
-      - TZ=Asia/Shanghai
       - MYSQL_ROOT_PASSWORD=root
     volumes:
       - ./services/mysql57/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
