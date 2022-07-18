@@ -1,27 +1,32 @@
-version: "3"
-services: 
-    # mysql5.7
-    mysql57: 
-        image: mysql:5.7
-        container_name: mysql57
-        restart: always
-        volumes: 
-            - ./data/mysql57:/var/lib/mysql
-        ports: 
-            - 3306:3306
-        environment: 
-            - TZ=Asia/Shanghai
-            - MYSQL_ROOT_PASSWORD=root
-    
-    # redis
-    redis: 
-        image: redis:latest
-        container_name: redis
-        restart: always
-        ports: 
-            - 6379:6379
-networks: 
-    default: 
-        external: true
-        name: default-network
+version: "3.7"
+services:
+  mysql57:
+    container_name: mysql57
+    image: mysql:5.7.38
+    ports:
+      - "3306:3306"
+    networks:
+      - default
+      - custom_network
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./services/mysql57/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
+      - ./data/mysql57:/var/lib/mysql:rw
 
+  redis:
+    container_name: redis
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    restart: always
+
+networks:
+  default:
+    driver: bridge
+
+  custom_network:
+    external: true
+    name: custom_network
